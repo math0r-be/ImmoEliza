@@ -34,15 +34,15 @@ if submitted:
     input_data = {
         "bedroomCount": bedroomCount,
         "bathroomCount": bathroomCount,
-        "habitableSurface": habitableSurface,
-        "landSurface": landSurface,
+        "habitableSurface": float(habitableSurface),
+        "landSurface": float(landSurface),
         "facedeCount": facedeCount,
-        "terraceSurface": terraceSurface,
+        "terraceSurface": float(terraceSurface),
         "hasSwimmingPool": hasSwimmingPool,
         "hasTerrace": hasTerrace,
         "buildingConstructionYear": buildingConstructionYear,
         "postCode": postCode,
-        "epcScore_encoded": epcScore_encoded
+        "epcScore_encoded": float(epcScore_encoded)  # <-- important
     }
 
     try:
