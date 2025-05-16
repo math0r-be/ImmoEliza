@@ -15,7 +15,7 @@ with st.form("prediction_form"):
         facadeCount = st.number_input("Facade count", min_value=0, value=2)
 
     with col2:
-        terraceSurface = st.number_input("Surface area (m²)", min_value=0, value=15)
+        terraceSurface = st.number_input("Terrace surface (m²)", min_value=0, value=15)
         hasSwimmingPool = st.checkbox("Swimming pool", value=False)
         hasTerrace = st.checkbox("Terrace", value=True)
         buildingConstructionYear = st.number_input("Construction Year", min_value=1800, max_value=2025, value=2010)
@@ -23,8 +23,7 @@ with st.form("prediction_form"):
 
     epc_labels = ["A++", "A+", "A", "B", "C", "D", "E", "F", "G"]
     epc_mapping = {label: idx for idx, label in enumerate(epc_labels)}
-    assert len(epc_mapping) == 9, "Encodage EPC incorrect"
-    selected_epc = st.selectbox("Score EPC", epc_labels, index=4)
+    selected_epc = st.selectbox("EPC Score", epc_labels, index=4)
     epcScore_encoded = epc_mapping[selected_epc]
 
     submitted = st.form_submit_button("🔍 Estimate")
@@ -35,24 +34,30 @@ if submitted:
         "bathroomCount": int(bathroomCount),
         "habitableSurface": float(habitableSurface),
         "landSurface": float(landSurface),
-        "facadeCount": facadeCount,
+        "facadeCount": int(facadeCount),
         "terraceSurface": float(terraceSurface),
-        "hasSwimmingPool": hasSwimmingPool,
-        "hasTerrace": hasTerrace,
+        "hasSwimmingPool": bool(hasSwimmingPool),
+        "hasTerrace": bool(hasTerrace),
         "buildingConstructionYear": int(buildingConstructionYear),
         "postCode": int(postCode),
         "epcScore_encoded": int(epcScore_encoded)
     }
 
-    st.subheader("Données envoyées à l'API")
-    st.code(json.dumps(input_data, indent=2))
+    # On enveloppe dans un champ "data" comme attendu par FastAPI
+    full_payload = {"data": input_data}
 
+    # Affiche ce qui est réellement envoyé
+    st.subheader("✅ VRAI JSON envoyé à l'API")
+    st.code(json.dumps(full_payload, indent=2))
+
+    # Requête POST vers l'API
     try:
-        response = requests.post("https://immo-api.onrender.com/predict", json={"data": input_data})
+        response = requests.post("https://immo-api.onrender.com/predict", json=full_payload)
         if response.status_code == 200:
             predicted_price = response.json()["predicted_price"]
-            st.metric(label="Estimated price", value=f"{predicted_price:,.2f} €")
+            st.metric(label="💶 Estimated price", value=f"{predicted_price:,.2f} €")
         else:
-            st.error(f"Prediction error. Code: {response.status_code}")
+            st.error(f"❌ Prediction error. Code: {response.status_code}")
+            st.text(response.text)
     except Exception as e:
-        st.error(f"Error: {e}")
+        st.error(f"🔥 Error: {e}")
