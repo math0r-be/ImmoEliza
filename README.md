@@ -9,9 +9,7 @@ The application uses a trained machine learning model to estimate the sale price
 
 ## 🚀 Live Demo
 
-👉 [Click here to try the app] >> to update
-
-*(Replace with your actual Render URL)*
+👉 https://immo-streamlit.onrender.com/
 
 ---
 
@@ -23,15 +21,4 @@ The application uses a trained machine learning model to estimate the sale price
 
 ---
 
-### Requirements
 
-- Python 3.8 or higher
-- `pip` installed
-
-### Setup
-
-```bash
-git clone <repo-url>
-cd immo-eliza-app
-pip install -r requirements.txt
-streamlit run streamlit_app.py 
