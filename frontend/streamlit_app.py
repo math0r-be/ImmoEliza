@@ -42,6 +42,7 @@ if submitted:
         "epcScore_encoded": float(epcScore_encoded)
     }
 
+
     try:
         response = requests.post("https://immo-api.onrender.com/predict", json=input_data)
         if response.status_code == 200:
