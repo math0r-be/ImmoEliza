@@ -12,7 +12,7 @@ with st.form("prediction_form"):
         bathroomCount = st.number_input("Number of bathrooms", min_value=0, value=1)
         habitableSurface = st.number_input("Living surface (m²)", min_value=0, value=100)
         landSurface = st.number_input("Land surface (m²)", min_value=0, value=200)
-        facedeCount = st.number_input("Facade count", min_value=0, value=2)
+        facadeCount = st.number_input("Facade count", min_value=0, value=2)
 
     with col2:
         terraceSurface = st.number_input("Surface area (m²)", min_value=0, value=15)
@@ -23,7 +23,6 @@ with st.form("prediction_form"):
 
     epc_labels = ["A++", "A+", "A", "B", "C", "D", "E", "F", "G"]
     epc_mapping = {label: idx for idx, label in enumerate(epc_labels)}
-    # Vérification finale de l'encodage
     assert len(epc_mapping) == 9, "Encodage EPC incorrect"
     selected_epc = st.selectbox("Score EPC", epc_labels, index=4)
     epcScore_encoded = epc_mapping[selected_epc]
@@ -36,7 +35,7 @@ if submitted:
         "bathroomCount": int(bathroomCount),
         "habitableSurface": float(habitableSurface),
         "landSurface": float(landSurface),
-        "facedeCount": facedeCount,  # changé ici aussi
+        "facadeCount": facadeCount,
         "terraceSurface": float(terraceSurface),
         "hasSwimmingPool": hasSwimmingPool,
         "hasTerrace": hasTerrace,
@@ -44,11 +43,9 @@ if submitted:
         "postCode": int(postCode),
         "epcScore_encoded": int(epcScore_encoded)
     }
-    
-#TEST    
+
     st.subheader("Données envoyées à l'API")
     st.code(json.dumps(input_data, indent=2))
-#FIN TEST
 
     try:
         response = requests.post("https://immo-api.onrender.com/predict", json=input_data)
