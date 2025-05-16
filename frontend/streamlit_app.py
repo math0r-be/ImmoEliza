@@ -2,7 +2,6 @@ import streamlit as st
 import requests
 
 st.set_page_config(page_title="ImmoEliza", layout="centered")
-
 st.title("ImmoEliza")
 
 with st.form("prediction_form"):
@@ -21,8 +20,6 @@ with st.form("prediction_form"):
         buildingConstructionYear = st.number_input("Construction Year", min_value=1800, max_value=2025, value=2010)
         postCode = st.number_input("Postal code", min_value=1000, max_value=9999, value=1000)
 
-    #epcScore_encoded = st.slider("Score EPC (0=A++, 8=G)", min_value=0, max_value=8, value=4)
-    # Sélection lisible du score EPC
     epc_labels = ["A++", "A+", "A", "B", "C", "D", "E", "F", "G"]
     epc_mapping = {label: idx for idx, label in enumerate(epc_labels)}
     selected_epc = st.selectbox("Score EPC", epc_labels, index=4)
@@ -34,22 +31,15 @@ if submitted:
     input_data = {
         "bedroomCount": bedroomCount,
         "bathroomCount": bathroomCount,
-<<<<<<< HEAD
         "habitableSurface": float(habitableSurface),
         "landSurface": float(landSurface),
-        "facedeCount": facedeCount,
-        "terraceSurface": float(terraceSurface),
-=======
-        "habitableSurface": habitableSurface,
-        "landSurface": landSurface,
         "facadeCount": facadeCount,
-        "terraceSurface": terraceSurface,
->>>>>>> 329849c (debug prediction error after deployement)
+        "terraceSurface": float(terraceSurface),
         "hasSwimmingPool": hasSwimmingPool,
         "hasTerrace": hasTerrace,
         "buildingConstructionYear": buildingConstructionYear,
         "postCode": postCode,
-        "epcScore_encoded": float(epcScore_encoded)  # <-- important
+        "epcScore_encoded": float(epcScore_encoded)
     }
 
     try:
@@ -58,6 +48,6 @@ if submitted:
             predicted_price = response.json()["predicted_price"]
             st.metric(label="Estimated price", value=f"{predicted_price:,.2f} €")
         else:
-            st.error("Prediction error. Code: {}".format(response.status_code))
+            st.error(f"Prediction error. Code: {response.status_code}")
     except Exception as e:
-        st.error(f"error : {e}")
+        st.error(f"Error: {e}")
