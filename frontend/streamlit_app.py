@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import json
 
 st.set_page_config(page_title="ImmoEliza", layout="centered")
 st.title("ImmoEliza")
@@ -43,6 +44,11 @@ if submitted:
         "postCode": int(postCode),
         "epcScore_encoded": int(epcScore_encoded)
     }
+    
+#TEST    
+    st.subheader("Données envoyées à l'API")
+    st.code(json.dumps(input_data, indent=2))
+#FIN TEST
 
     try:
         response = requests.post("https://immo-api.onrender.com/predict", json=input_data)
