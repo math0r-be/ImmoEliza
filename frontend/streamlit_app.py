@@ -48,7 +48,7 @@ if submitted:
     st.code(json.dumps(input_data, indent=2))
 
     try:
-        response = requests.post("https://immo-api.onrender.com/predict", json=input_data)
+        response = requests.post("https://immo-api.onrender.com/predict", json={"data": input_data})
         if response.status_code == 200:
             predicted_price = response.json()["predicted_price"]
             st.metric(label="Estimated price", value=f"{predicted_price:,.2f} €")
