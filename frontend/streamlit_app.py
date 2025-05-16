@@ -43,16 +43,11 @@ if submitted:
         "epcScore_encoded": int(epcScore_encoded)
     }
 
-    # On enveloppe dans un champ "data" comme attendu par FastAPI
-    full_payload = {"data": input_data}
+    st.subheader("✅ JSON envoyé à l'API")
+    st.code(json.dumps(input_data, indent=2))
 
-    # Affiche ce qui est réellement envoyé
-    st.subheader("✅ VRAI JSON envoyé à l'API")
-    st.code(json.dumps(full_payload, indent=2))
-
-    # Requête POST vers l'API
     try:
-        response = requests.post("https://immo-api.onrender.com/predict", json=full_payload)
+        response = requests.post("https://immo-api.onrender.com/predict", json=input_data)
         if response.status_code == 200:
             predicted_price = response.json()["predicted_price"]
             st.metric(label="💶 Estimated price", value=f"{predicted_price:,.2f} €")
