@@ -11,7 +11,7 @@ with st.form("prediction_form"):
         bathroomCount = st.number_input("Number of bathrooms", min_value=0, value=1)
         habitableSurface = st.number_input("Living surface (m²)", min_value=0, value=100)
         landSurface = st.number_input("Land surface (m²)", min_value=0, value=200)
-        facadeCount = st.number_input("Facade count", min_value=0, value=2)
+        facedeCount = st.number_input("Facade count", min_value=0, value=2)
 
     with col2:
         terraceSurface = st.number_input("Surface area (m²)", min_value=0, value=15)
@@ -33,7 +33,7 @@ if submitted:
         "bathroomCount": bathroomCount,
         "habitableSurface": float(habitableSurface),
         "landSurface": float(landSurface),
-        "facadeCount": facadeCount,
+        "facedeCount": facedeCount,  # changé ici aussi
         "terraceSurface": float(terraceSurface),
         "hasSwimmingPool": hasSwimmingPool,
         "hasTerrace": hasTerrace,
@@ -41,7 +41,6 @@ if submitted:
         "postCode": postCode,
         "epcScore_encoded": float(epcScore_encoded)
     }
-
 
     try:
         response = requests.post("https://immo-api.onrender.com/predict", json=input_data)
