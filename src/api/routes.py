@@ -18,7 +18,11 @@ router = APIRouter()
 app.include_router(router)
 
 @router.post("/predict")
-def predict(data: PropertyFeatures):
-    features = data.dict()
-    price = predict_price(features)
-    return {"predicted_price": price}
+async def predict(features: PropertyFeatures):
+    try:
+        # Conversion explicite des types
+        input_data = features.dict()
+        prediction = predict_price(input_data)
+        return {"predicted_price": round(float(prediction), 2)}
+    except Exception as e:
+        return {"error": str(e), "status_code": 500}

@@ -22,6 +22,8 @@ with st.form("prediction_form"):
 
     epc_labels = ["A++", "A+", "A", "B", "C", "D", "E", "F", "G"]
     epc_mapping = {label: idx for idx, label in enumerate(epc_labels)}
+    # Vérification finale de l'encodage
+    assert len(epc_mapping) == 9, "Encodage EPC incorrect"
     selected_epc = st.selectbox("Score EPC", epc_labels, index=4)
     epcScore_encoded = epc_mapping[selected_epc]
 
@@ -29,17 +31,17 @@ with st.form("prediction_form"):
 
 if submitted:
     input_data = {
-        "bedroomCount": bedroomCount,
-        "bathroomCount": bathroomCount,
+        "bedroomCount": int(bedroomCount),
+        "bathroomCount": int(bathroomCount),
         "habitableSurface": float(habitableSurface),
         "landSurface": float(landSurface),
         "facedeCount": facedeCount,  # changé ici aussi
         "terraceSurface": float(terraceSurface),
         "hasSwimmingPool": hasSwimmingPool,
         "hasTerrace": hasTerrace,
-        "buildingConstructionYear": buildingConstructionYear,
-        "postCode": postCode,
-        "epcScore_encoded": float(epcScore_encoded)
+        "buildingConstructionYear": int(buildingConstructionYear),
+        "postCode": int(postCode),
+        "epcScore_encoded": int(epcScore_encoded)
     }
 
     try:
