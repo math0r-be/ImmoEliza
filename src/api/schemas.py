@@ -6,7 +6,7 @@ class PropertyFeatures(BaseModel):
     bathroomCount: int
     habitableSurface: float
     landSurface: float
-    facedeCount: int
+    facadeCount: int
     terraceSurface: float
     hasSwimmingPool: bool
     hasTerrace: bool
