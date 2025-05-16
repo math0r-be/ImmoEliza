@@ -6,7 +6,7 @@ class PropertyFeatures(BaseModel):
     bathroomCount: int = Field(..., gt=0, example=1)
     habitableSurface: float = Field(..., gt=0.0, example=100.0)
     landSurface: float = Field(..., gt=0.0, example=200.0)
-    facadeCount: int = Field(..., gt=0, example=2)
+    facedeCount: int = Field(..., gt=0, example=2)
     terraceSurface: float = Field(..., ge=0.0, example=15.0)
     hasSwimmingPool: bool = Field(..., example=False)
     hasTerrace: bool = Field(..., example=True)
